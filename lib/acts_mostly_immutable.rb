@@ -5,7 +5,7 @@ module ActsMostlyImmutable
       @__prefix_called = true
       @__prefix = prefix
 
-      define_method :party do
+      define_method "#{@__prefix}party" do
         'time'
       end
     end
@@ -16,7 +16,7 @@ module ActsMostlyImmutable
   end
 
   def method_missing(meth, *args, &block)
-    self.class.ami_prefix ''
+    self.class.ami_prefix @__prefix
     if self.respond_to? meth
       self.send meth, *args, &block
     else
