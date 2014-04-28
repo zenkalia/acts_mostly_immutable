@@ -8,6 +8,17 @@ module ActsMostlyImmutable
       define_method "#{@__prefix}party" do
         'time'
       end
+
+      define_method :save, -> (*args, &block) do
+        if self.changed? && self.persisted?
+          self.id = nil
+          new_guy = self.class.create(self.attributes)
+          self.changes.each {|k,vs| self[k] = vs.first}
+          new_guy
+        else
+          super(*args, &block)
+        end
+      end
     end
   end
 

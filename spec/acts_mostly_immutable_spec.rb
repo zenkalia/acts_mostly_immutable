@@ -36,4 +36,25 @@ describe 'ActsMostlyImmutable' do
       Whatever.new.party.should == 'time'
     end
   end
+
+  describe 'the immutability stuff' do
+    include_context 'whatever_class'
+
+    let!(:whatever) { Whatever.create(name: 'smashing pumpkins') }
+    it 'does nothing when the model does not change' do
+      count = Whatever.count
+      whatever.save
+      Whatever.count.should == count
+    end
+
+    it 'creates a new instance when stuff changes' do
+      count = Whatever.count
+      whatever.name = 'nirvana'
+      new_whatever = whatever.save
+
+      Whatever.count.should == (count + 1)
+      new_whatever.name.should == 'nirvana'
+      whatever.name.should == 'smashing pumpkins'
+    end
+  end
 end
