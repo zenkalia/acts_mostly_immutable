@@ -9,4 +9,8 @@ Gem::Specification.new do |s|
   s.files       = ["lib/acts_mostly_immutable.rb"]
   s.homepage    = 'http://www.github.com/zenkaila/acts_mostly_immutable'
   s.license     = 'MIT'
+
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'activerecord'
+  s.add_development_dependency 'sqlite3'
 end
